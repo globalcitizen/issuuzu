@@ -14,7 +14,7 @@ print "Fetching URL '$url'\n";
 $initial_page_data = http_fetch($url);
 #print "Fetched data:\n";
 #print $initial_page_data . "\n";
-$url = preg_match_all("/(?:https:\/\/e.issuu.com\/embed.html[^\"]+?)\"/ism",$initial_page_data,$matches);
+preg_match_all("/(?:https:\/\/e.issuu.com\/embed.html[^\"]+?)\"/ism",$initial_page_data,$matches);
 $publication_count = count($matches[0]);
 if($publication_count == 0) {
  print "No matching embedded URLs in source of '$url', aborting.\n";
@@ -95,12 +95,12 @@ function download_publication($matching_url) {
 }
 
 function http_fetch($url) {
- $cmd = "curl --no-head --silent --compressed " . escapeshellarg($url);
+ $cmd = "curl --no-head --silent --compressed " . escapeshellarg($url) . "-H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.5666.197 Safari/537.36' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' -H 'Accept-Encoding: gzip, deflate, br' -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Upgrade-Insecure-Requests: 1' -H 'Sec-Fetch-Dest: document' -H 'Sec-Fetch-Mode: navigate' -H 'Sec-Fetch-Site: same-origin' -H 'sec-ch-ua-platform: Windows' -H 'sec-ch-ua: Google Chrome;v=113, Chromium;v=113, Not=A?Brand;v=24' -H 'TE: trailers'";
  return shell_exec($cmd);
 }
 
 function http_fetch_file($url,$file) {
- $cmd = "curl --no-head --silent --compressed -o " . escapeshellarg($file) . " " . escapeshellarg($url);
+ $cmd = "curl --no-head --silent --compressed -o " . escapeshellarg($file) . " " . escapeshellarg($url) . "-H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.5666.197 Safari/537.36' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' -H 'Accept-Encoding: gzip, deflate, br' -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Upgrade-Insecure-Requests: 1' -H 'Sec-Fetch-Dest: document' -H 'Sec-Fetch-Mode: navigate' -H 'Sec-Fetch-Site: same-origin' -H 'sec-ch-ua-platform: Windows' -H 'sec-ch-ua: Google Chrome;v=113, Chromium;v=113, Not=A?Brand;v=24' -H 'TE: trailers'";
  return shell_exec($cmd);
 }
 
